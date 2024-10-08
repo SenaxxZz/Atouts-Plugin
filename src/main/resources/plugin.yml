@@ -1,0 +1,46 @@
+name: Atouts
+version: 1.0.0
+main: fr.senaxzzonyt.atouts.Main
+api-version: 1.13
+description: Plugin de gestion des atouts pour les joueurs
+required:
+  plugins:
+    - Vault
+commands:
+  atouts:
+    description: Commande principale du plugin
+    usage: /<command> <give|delete|check|reload|help> <player> [atout]
+permissions:
+  atouts.use:
+    default: true
+    description: Permet d'utiliser les atouts
+  atouts.reload:
+    default: op
+    description: Permet de recharger les atouts
+  atouts.give:
+    default: op
+    description: Permet de donner des atouts
+  atouts.delete:
+    default: op
+    description: Permet de supprimer un ou plusieurs atouts d'un joueur
+  atouts.checkpurchases:
+    default: op
+    description: Permet de voir les atouts achetés par un joueur
+  atouts.help:
+    default: true
+    description: Permet d'afficher la liste des commandes
+  atouts.force:
+    default: false
+    description: Atouts de Force (Force I)
+  atouts.speed:
+    default: false
+    description: Atouts de Speed (Speed I)
+  atouts.haste:
+    default: false
+    description: Atouts de Haste (Haste I)
+  atouts.nightvision:
+    default: false
+    description: Atouts de Night Vision (Night Vision I)
+  atouts.fireresistance:
+    default: false
+    description: Atouts de Fire Resistance (Fire Resistance I)
