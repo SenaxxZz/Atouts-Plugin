@@ -5,7 +5,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 public class AtoutsReloadCommand implements CommandExecutor {
 
@@ -17,19 +16,17 @@ public class AtoutsReloadCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            if (!player.hasPermission("atouts.reload")) {
-                player.sendMessage(ChatColor.RED + "Erreur : " + ChatColor.RED + "Vous n'avez pas la permission d'exécuter cette commande.");
-                return true;
-            }
+        // Check permission for both players and console
+        if (!sender.hasPermission("atouts.reload")) {
+            sender.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + "You don't have permission to reload the plugin.");
+            return true;
         }
 
         try {
             plugin.reloadConfig();
-            sender.sendMessage(ChatColor.GOLD + "La configuration du plugin a bien été rechargée.");
+            sender.sendMessage(ChatColor.GOLD + "Plugin configuration reloaded successfully.");
         } catch (Exception e) {
-            sender.sendMessage(ChatColor.RED + "Erreur : " + ChatColor.GOLD + "Impossible de recharger la configuration. " + ChatColor.DARK_RED + "Regardez les logs dans la console.");
+            sender.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + "Could not reload config. " + ChatColor.DARK_RED + "Check console logs for details.");
             e.printStackTrace();
         }
 

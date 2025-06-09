@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>untitled1</name>
+    <name>Atouts-Plugin</name>
 
     <properties>
         <java.version>1.8</java.version>
@@ -71,6 +71,7 @@
             <groupId>com.github.MilkBowl</groupId>
             <artifactId>VaultAPI</artifactId>
             <version>1.7</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

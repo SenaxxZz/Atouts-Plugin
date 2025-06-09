@@ -1,9 +1,7 @@
-# Ce ficher contient la configuration du plugin d'atouts de Luminaria.
-
+# Prices for various atouts in the game
 prices:
   force: 100000
   speed: 800
   haste: 600
   nightvision: 500
   fireresistance: 700
-# Prix en $ donc 100 = 100$ par example.

@@ -17,53 +17,50 @@ public class CheckAtoutsPurchasesCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender.hasPermission("atouts.checkpurchases")) {
-            if (args.length != 2) {
-                sender.sendMessage(ChatColor.RED + "Erreur d'utilisation : " + ChatColor.GOLD + " /atouts check <player>");
-                return false;
-            }
+        // Permission check for the command
+        if (!sender.hasPermission("atouts.checkpurchases")) {
+            sender.sendMessage(ChatColor.RED + "Erreur : " + ChatColor.GOLD + "Vous n'avez pas la permission d'exécuter cette commande.");
+            return true;
+        }
 
-            String playerName = args[1];
-            Player targetPlayer = this.plugin.getServer().getPlayer(playerName);
+        // Usage: /atouts check <player>
+        if (args.length != 2) {
+            sender.sendMessage(ChatColor.RED + "Utilisation : " + ChatColor.GOLD + "/atouts check <joueur>");
+            return false;
+        }
 
-            if (targetPlayer == null) {
-                sender.sendMessage(ChatColor.RED + "Erreur : " + ChatColor.GOLD + "Le joueur " + playerName + " n'est pas connecté ou n'est pas trouvé.");
-                return false;
-            }
+        String playerName = args[1];
+        Player target = plugin.getServer().getPlayer(playerName);
 
-            String[] atouts = {"force", "speed", "haste", "fireresistance", "nightvision"};
-            String[] atoutsNames = {"Force I", "Speed I", "Haste I", "Fire Resistance", "Night Vision"};
-            ChatColor[] colors = {ChatColor.RED, ChatColor.BLUE, ChatColor.YELLOW, ChatColor.GOLD, ChatColor.DARK_PURPLE};
+        if (target == null) {
+            sender.sendMessage(ChatColor.RED + "Erreur : " + ChatColor.GOLD + "Le joueur " + playerName + " n'est pas connecté ou introuvable.");
+            return false;
+        }
 
-            for (int i = 0; i < atouts.length; i++) {
-                String permission = getPermissionFromAtout(atouts[i]);
-                ChatColor color = colors[i];
-                if (targetPlayer.hasPermission(permission)) {
-                    sender.sendMessage(color + atoutsNames[i] + ": " + ChatColor.GREEN + "Possédé");
-                } else {
-                    sender.sendMessage(color + atoutsNames[i] + ": " + ChatColor.RED + "Non possédé");
-                }
-            }
-        } else {
-            sender.sendMessage(ChatColor.RED +"Erreur : " + ChatColor.GOLD + " Vous n'avez pas la permission d'exécuter cette commande");
+        // List of perks to check
+        String[] atouts = {"force", "speed", "haste", "fireresistance", "nightvision"};
+        String[] atoutsNames = {"Force I", "Speed I", "Haste I", "Fire Resistance", "Night Vision"};
+        ChatColor[] colors = {ChatColor.RED, ChatColor.AQUA, ChatColor.YELLOW, ChatColor.GOLD, ChatColor.DARK_PURPLE};
+
+        sender.sendMessage(ChatColor.GOLD + "Atouts de " + ChatColor.WHITE + playerName + ChatColor.GOLD + " :");
+        for (int i = 0; i < atouts.length; i++) {
+            String perm = getPermissionFromAtout(atouts[i]);
+            ChatColor color = colors[i];
+            boolean has = target.hasPermission(perm);
+            sender.sendMessage(color + atoutsNames[i] + ": " + (has ? ChatColor.GREEN + "Possédé" : ChatColor.RED + "Non possédé"));
         }
         return true;
     }
 
+    // Maps perk name to permission string
     private String getPermissionFromAtout(String atout) {
         switch (atout.toLowerCase()) {
-            case "force":
-                return "atouts.force";
-            case "speed":
-                return "atouts.speed";
-            case "haste":
-                return "atouts.haste";
-            case "fireresistance":
-                return "atouts.fireresistance";
-            case "nightvision":
-                return "atouts.nightvision";
-            default:
-                return "";
+            case "force": return "atouts.force";
+            case "speed": return "atouts.speed";
+            case "haste": return "atouts.haste";
+            case "fireresistance": return "atouts.fireresistance";
+            case "nightvision": return "atouts.nightvision";
+            default: return "";
         }
     }
 }

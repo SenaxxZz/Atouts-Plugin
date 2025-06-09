@@ -1,46 +1,55 @@
+# Main config for the Atouts plugin
+# Handles player perks, permissions, and commands
+
 name: Atouts
 version: 1.0.0
 main: fr.senaxzzonyt.atouts.Main
 api-version: 1.13
-description: Plugin de gestion des atouts pour les joueurs
-required:
-  plugins:
-    - Vault
+description: Advanced perks management for Minecraft players
+depend:
+  - Vault
+  - Essentials
+
 commands:
   atouts:
-    description: Commande principale du plugin
-    usage: /<command> <give|delete|check|reload|help> <player> [atout]
+    description: Main command for all perks actions
+    usage: /atouts <give|delete|check|reload|help> <player> [perk]
+
 permissions:
   atouts.use:
     default: true
-    description: Permet d'utiliser les atouts
+    description: Allows use of perks
   atouts.reload:
     default: op
-    description: Permet de recharger les atouts
+    description: Allows reloading the plugin
   atouts.give:
     default: op
-    description: Permet de donner des atouts
+    description: Lets you grant a perk to a player
   atouts.delete:
     default: op
-    description: Permet de supprimer un ou plusieurs atouts d'un joueur
+    description: Lets you remove perks from a player
   atouts.checkpurchases:
     default: op
-    description: Permet de voir les atouts achetés par un joueur
+    description: Shows a player's purchased perks
   atouts.help:
     default: true
-    description: Permet d'afficher la liste des commandes
+    description: Shows plugin command help
   atouts.force:
     default: false
-    description: Atouts de Force (Force I)
+    description: Grants Force perk (Strength I)
+
   atouts.speed:
     default: false
-    description: Atouts de Speed (Speed I)
+    description: Grants Speed perk (Speed I)
+
   atouts.haste:
     default: false
-    description: Atouts de Haste (Haste I)
+    description: Grants Haste perk (Haste I)
+
   atouts.nightvision:
     default: false
-    description: Atouts de Night Vision (Night Vision I)
+    description: Grants Night Vision perk (Night Vision I)
+
   atouts.fireresistance:
     default: false
-    description: Atouts de Fire Resistance (Fire Resistance I)
+    description: Grants Fire Resistance perk (Fire Resistance I)

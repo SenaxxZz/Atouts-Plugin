@@ -11,47 +11,48 @@ import org.bukkit.entity.Player;
 public class AtoutsCommand implements CommandExecutor {
 
     private final Main plugin;
-    private final AtoutsReloadCommand reloadCommand;
-    private final GiveAtoutsCommand giveCommand;
-    private final DeleteAtoutsCommand deleteCommand;
-    private final CheckAtoutsPurchasesCommand checkCommand;
-    private final HelpCommand helpCommand;
+    private final AtoutsReloadCommand reloadCmd;
+    private final GiveAtoutsCommand giveCmd;
+    private final DeleteAtoutsCommand deleteCmd;
+    private final CheckAtoutsPurchasesCommand checkCmd;
+    private final HelpCommand helpCmd;
 
     public AtoutsCommand(Main plugin) {
         this.plugin = plugin;
-        this.reloadCommand = new AtoutsReloadCommand(plugin);
-        this.giveCommand = new GiveAtoutsCommand(plugin);
-        this.deleteCommand = new DeleteAtoutsCommand(plugin);
-        this.checkCommand = new CheckAtoutsPurchasesCommand(plugin);
-        this.helpCommand = new HelpCommand(plugin);
+        this.reloadCmd = new AtoutsReloadCommand(plugin);
+        this.giveCmd = new GiveAtoutsCommand(plugin);
+        this.deleteCmd = new DeleteAtoutsCommand(plugin);
+        this.checkCmd = new CheckAtoutsPurchasesCommand(plugin);
+        this.helpCmd = new HelpCommand(plugin);
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        // If no arguments, open the GUI for players, else show error for console
         if (args.length == 0) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 new AtoutsGUI(plugin).openAtoutsGUI(player);
                 return true;
-            } else {
-                sender.sendMessage(ChatColor.RED + "Erreur : " + ChatColor.GOLD + "Cette commande doit être exécutée par un joueur.");
-                return false;
             }
+            sender.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + "This command must be run by a player.");
+            return false;
         }
 
+        // Handle subcommands
         switch (args[0].toLowerCase()) {
             case "reload":
-                return reloadCommand.onCommand(sender, command, label, args);
+                return reloadCmd.onCommand(sender, command, label, args);
             case "give":
-                return giveCommand.onCommand(sender, command, label, args);
+                return giveCmd.onCommand(sender, command, label, args);
             case "delete":
-                return deleteCommand.onCommand(sender, command, label, args);
+                return deleteCmd.onCommand(sender, command, label, args);
             case "check":
-                return checkCommand.onCommand(sender, command, label, args);
+                return checkCmd.onCommand(sender, command, label, args);
             case "help":
-                return helpCommand.onCommand(sender, command, label, args);
+                return helpCmd.onCommand(sender, command, label, args);
             default:
-                sender.sendMessage(ChatColor.RED + "Erreur : " + ChatColor.GOLD + "Commande inconnue.");
+                sender.sendMessage(ChatColor.RED + "Error: " + ChatColor.GOLD + "Unknown command.");
                 return false;
         }
     }
